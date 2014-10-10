@@ -1,28 +1,38 @@
-
-# This is the user-interface definition of a Shiny web application.
-# You can find out more about building applications with Shiny here:
-# 
-# http://www.rstudio.com/shiny/
-#
-
 library(shiny)
 
-shinyUI(pageWithSidebar(
-  
-  # Application title
-  headerPanel("Old Faithful Geyser Data"),
-  
-  # Sidebar with a slider input for number of bins
-  sidebarPanel(
-    sliderInput("bins",
-                "Number of bins:",
-                min = 1,
-                max = 50,
-                value = 30)
-  ),
-  
-  # Show a plot of the generated distribution
-  mainPanel(
-    plotOutput("distPlot")
-  )
-))
+date.min <- min(wl$datetime)
+date.max <- max(wl$datetime)
+
+ymin <- min(wl$level)
+ymax <- max(wl$level)
+
+shinyUI(
+    fluidPage({
+      titlePanel("WaterMonitor Views")
+      
+      sidebarLayout(
+        sidebarPanel(
+          #TODO autopopulate a dropdown list with all the wells
+          
+          #Date Range
+          dateRangeInput("daterange", "Date Range", start=date.min, end=date.max),
+          
+          #ylim range
+          sliderInput("ylimrange", "Y Axis Range", ymin, ymax, c(ymin, ymax)),
+          
+        
+          #Labels
+          textInput("title", "Title"),
+          textInput("xaxis", "X Axis"),
+          textInput("yaxis", "Y Axis")
+        
+          #pretty stuff
+      
+          ),
+      
+      mainPanel(
+        plotOutput("wellplot")
+        )
+      )
+    }) 
+)

@@ -1,23 +1,26 @@
-
-# This is the server logic for a Shiny web application.
-# You can find out more about building applications with Shiny here:
-# 
-# http://www.rstudio.com/shiny/
-#
-
 library(shiny)
+library(dplyr)
+library(RCurl)
+library(RJSONIO)
 
-shinyServer(function(input, output) {
-   
-  output$distPlot <- renderPlot({
+shinyServer(function(input, output, session) {
+
+  wells <- getURL("104.131.248.249/?q=well-data")
+  
+  handler <- basicJSONHandler(simplify=T)
+  wells1 <- fromJSON(wells)
+  
+  wl <- data.frame(serial=character(),datetime=as.Date(character()),level=numeric())
+  for(n in wells1$nodes) {
+    row <- data.frame(serial=n$node[3], datetime=as.POSIXct(as.numeric(as.character(n$node[2])),origin="1970-01-01"), level=as.numeric(n$node[1]))
+    wl <- rbind(wl, row)
+  }
+  
+  output$wellplot <- renderPlot({
     
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2] 
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    
+    plot(y=wl$level, x=wl$datetime, pch=16, ylim= c(input$ylimrange[1], input$ylimrange[2]),xlab = input$xaxis, ylab = input$yaxis, main = input$title) # xlim=c(as.POSIXct(input$daterange[0]), as.POSIXct(input$daterange[1]))
+    #lines(y=wl$level, x=wl$datetime)
   })
+  
   
 })
