@@ -22,10 +22,8 @@ shinyUI(
           
         
           #Labels
-          textInput("title", "Title"),
-          textInput("xaxis", "X Axis"),
-          textInput("yaxis", "Y Axis")
-        
+          textInput("title", "Title")
+          
           #pretty stuff
       
           ),

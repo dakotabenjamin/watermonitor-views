@@ -5,7 +5,7 @@ library(RJSONIO)
 
 shinyServer(function(input, output, session) {
 
-  wells <- getURL("104.131.248.249/?q=well-data")
+  wells <- getURL("104.131.248.249/?q=well-data&wellserial=10FADCAB")
   
   handler <- basicJSONHandler(simplify=T)
   wells1 <- fromJSON(wells)
@@ -18,7 +18,7 @@ shinyServer(function(input, output, session) {
   
   output$wellplot <- renderPlot({
     
-    plot(y=wl$level, x=wl$datetime, pch=16, ylim= c(input$ylimrange[1], input$ylimrange[2]),xlab = input$xaxis, ylab = input$yaxis, main = input$title) # xlim=c(as.POSIXct(input$daterange[0]), as.POSIXct(input$daterange[1]))
+    plot(y=wl$level, x=wl$datetime, pch=16, ylim= c(input$ylimrange[1], input$ylimrange[2]),xlab = "Date", ylab = "level (cm)", main = input$title) # xlim=c(as.POSIXct(input$daterange[0]), as.POSIXct(input$daterange[1]))
     #lines(y=wl$level, x=wl$datetime)
   })
   
