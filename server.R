@@ -1,5 +1,4 @@
 library(shiny)
-library(dplyr)
 library(RCurl)
 library(RJSONIO)
 
