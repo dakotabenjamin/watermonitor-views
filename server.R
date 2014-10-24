@@ -2,6 +2,8 @@ library(shiny)
 library(RCurl)
 library(RJSONIO)
 
+options(shiny.reactlog=TRUE)
+
 shinyServer(function(input, output, session) {
 
   wells <- getURL("104.131.248.249/?q=well-data&wellserial=10FADCAB")
