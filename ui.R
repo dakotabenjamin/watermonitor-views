@@ -1,10 +1,10 @@
 library(shiny)
 
-date.min <- min(wl$datetime)
-date.max <- max(wl$datetime)
+#date.min <- min(wl$datetime)
+#date.max <- max(wl$datetime)
 
-ymin <- min(wl$level)
-ymax <- max(wl$level)
+#ymin <- min(wl$level)
+#ymax <- max(wl$level)
 
 shinyUI(
     fluidPage({
@@ -24,6 +24,7 @@ shinyUI(
           #Labels
           textInput("title", "Title")
           
+
           #pretty stuff
       
           ),
