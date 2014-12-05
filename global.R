@@ -3,7 +3,7 @@ library(RCurl)
 library(RJSONIO)
 
 
-  wells <- getURL("104.131.248.249/?q=well-data&wellserial=136B9D32")
+#  wells <- getURL("104.131.248.249/?q=well-data&wellserial=136B9D32")
 
   well.serials <- getURL("http://104.131.248.249/?q=well-serials")
   well.serials.parsed <- data.frame(serial=character())

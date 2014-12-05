@@ -28,6 +28,21 @@ shinyServer(function(input, output, session) {
 
   output$wellplot <- renderPlot({
    #@todo make it check for which well 
+    
+    #get well
+    wells <- getURL(paste("104.131.248.249/?q=well-data&wellserial=",input$wellserial))
+    
+    #It's not rerunning this part 
+    wl <- data.frame(serial=character(),datetime=as.Date(character()),level=numeric())
+    handler <- basicJSONHandler(simplify=T)
+    wells1 <- fromJSON(wells)
+    
+    for(n in wells1$nodes) {
+      row <- data.frame(serial=n$node[3], datetime=as.POSIXct(as.numeric(as.character(n$node[2])),origin="1970-01-01"), level=as.numeric(n$node[1]))
+      wl <- rbind(wl, row)
+    }
+    #until here
+    
     plot(y=wl$level, x=wl$datetime, pch=16, ylim= c(input$ylimrange[1], input$ylimrange[2]),xlab = "Date", ylab = "level (cm)", main = input$title) # xlim=c(as.POSIXct(input$daterange[0]), as.POSIXct(input$daterange[1]))
     #lines(y=wl$level, x=wl$datetime)
   })
