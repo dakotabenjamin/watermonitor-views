@@ -13,6 +13,7 @@ shinyUI(
       sidebarLayout(
         sidebarPanel(
           #TODO autopopulate a dropdown list with all the wells
+          selectInput("wellserial", "Well Serial", well.serials.parsed$serial),
           
           #Date Range
           dateRangeInput("daterange", "Date Range", start=date.min, end=date.max),
