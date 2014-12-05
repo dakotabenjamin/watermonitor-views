@@ -7,7 +7,7 @@ library(shiny)
 #ymax <- max(wl$level)
 
 shinyUI(
-    fluidPage({
+    fluidPage(theme="bootstrap.min.css",{
       titlePanel("WaterMonitor Views")
       
       sidebarLayout(
